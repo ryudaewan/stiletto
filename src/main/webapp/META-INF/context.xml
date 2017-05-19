@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <!-- Apache Tomcat Specific Web Application Configuation -->
+
+    <!-- Database Conneciton Configuration -->
+    <!-- maxTotal: Maximum number of database connections in pool. Make sure you
+         configure your Oracled max_connections large enough to handle
+         all of your db connections. Set to -1 for no limit.
+         -->
+
+    <!-- maxIdle: Maximum number of idle database connections to retain in pool.
+         Set to -1 for no limit.  See also the DBCP documentation on this
+         and the minEvictableIdleTimeMillis configuration parameter.
+         -->
+
+    <!-- maxWaitMillis: Maximum time to wait for a database connection to become available
+         in ms, in this example 10 seconds. An Exception is thrown if
+         this timeout is exceeded.  Set to -1 to wait indefinitely.
+         -->
+
+    <!-- username and password: Oracle username and password for database connections  -->
+
+    <!-- driverClassName: Class name for the old mm.Oracle JDBC driver is
+         org.gjt.mm.Oracle.Driver - we recommend using Connector/J though.
+         Class name for the official Oracle Connector/J driver is com.Oracle.jdbc.Driver.
+         -->
+
+    <!-- url: The JDBC connection url for connecting to your Oracle database. -->
+
+    <Resource name="jdbc/oracle" auth="Container"
+              type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+              url="jdbc:oracle:thin:@112.217.239.173:1521:SBORA"
+              username="devuser" password="coreplus01" maxTotal="3" maxIdle="3"
+              maxWaitMillis="-1"/>
+</Context>
