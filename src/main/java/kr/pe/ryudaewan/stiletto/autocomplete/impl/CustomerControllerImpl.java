@@ -26,7 +26,7 @@ public class CustomerControllerImpl implements CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @RequestMapping(value = "/searchCustomers", method = RequestMethod.GET)
+    @RequestMapping(value = "/ac/searchCustomers", method = RequestMethod.GET)
     @Override
     public @ResponseBody
     List<Customer> searchCustomers(@RequestParam String keyword) {

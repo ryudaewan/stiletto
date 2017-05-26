@@ -12,13 +12,6 @@
     .mytable th, .mytable td { border:1px solid black; }
 </style>
 <title>DB 연결 시험</title></head><body><%
-    Properties props = System.getProperties(); %>
-    <p><table class="mytable"><tr><th>key</th><th>property value</th></tr><%
-
-    for (String key: props.stringPropertyNames()) { %>
-        <tr><td><%= key %></td><td><%= props.getProperty(key) %></td></tr><%
-    } %></table></p><%
-
     Context cxt = new InitialContext();
     DataSource ds = null;
     Connection conn = null;
@@ -40,5 +33,12 @@
         if (null != rs) rs.close();
         if (null != pstmt) pstmt.close();
         if (null != conn) conn.close();
-    } %>
+    }
+
+    Properties props = System.getProperties(); %>
+    <p><table class="mytable"><tr><th>key</th><th>property value</th></tr><%
+
+    for (String key: props.stringPropertyNames()) { %>
+        <tr><td><%= key %></td><td><%= props.getProperty(key) %></td></tr><%
+    } %></table></p>
 </body></html>

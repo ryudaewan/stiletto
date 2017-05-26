@@ -15,6 +15,9 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
     </context-param>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
     <resource-ref>
  		<description>Oracle Datasource</description>
  		<res-ref-name>jdbc/oracle</res-ref-name>

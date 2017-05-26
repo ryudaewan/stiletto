@@ -51,7 +51,7 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/searchCustomers" method="GET">
+    <form action="${pageContext.request.contextPath}/ac/searchCustomers" method="GET">
         고객사명 <input type="text" id="searchKeyword" name="keyword"/>
         <div id="autocomplete"></div>
         <input type="submit" value="발사"/>
