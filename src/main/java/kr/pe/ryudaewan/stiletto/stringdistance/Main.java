@@ -1,16 +1,12 @@
 package kr.pe.ryudaewan.stiletto.stringdistance;
 
+import oracle.jdbc.OracleDriver;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import oracle.jdbc.OracleDriver;
+import java.sql.*;
 
 /**
  * Created by ryudaewan on 2017-05-16.

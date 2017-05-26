@@ -1,27 +1,25 @@
 package kr.pe.ryudaewan.stiletto.autocomplete.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
+import kr.pe.ryudaewan.stiletto.autocomplete.Customer;
+import kr.pe.ryudaewan.stiletto.autocomplete.CustomerDAO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import kr.pe.ryudaewan.stiletto.autocomplete.Customer;
-import kr.pe.ryudaewan.stiletto.autocomplete.CustomerDAO;
+import javax.sql.DataSource;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ryudaewan on 2017-05-17.
  */
 @Repository
-public class CustomerDAOImplRDB implements CustomerDAO {
-    private static final Log logger = LogFactory.getLog(CustomerDAOImplRDB.class);
+public class CustomerDAOImplOracle implements CustomerDAO {
+    private static final Log logger = LogFactory.getLog(CustomerDAOImplOracle.class);
     @Autowired
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -46,10 +44,11 @@ public class CustomerDAOImplRDB implements CustomerDAO {
                 "WHERE 1 = 1 and\n" +
                 "  CT.NAME LIKE ?\n" +
                 "ORDER BY JW DESC";
+        String temp = keyword.toUpperCase();
 
-        Object[] params = {keyword, keyword + "%"};
+        Object[] params = {temp, temp + "%"};
 
-        if (2 < keyword.length()) params[1] = keyword.substring(0, 2) + "%";
+        if (2 < temp.length()) params[1] = temp.substring(0, 2) + "%";
 
         if (logger.isDebugEnabled()) {
             logger.debug(sql);
@@ -69,6 +68,10 @@ public class CustomerDAOImplRDB implements CustomerDAO {
         //////////////////////////////////
 
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, params);
+
+        if (null != rows && !rows.isEmpty() && 1.0 == (double) rows.get(0).get("JW")) {
+            rows = rows.subList(0, 1);
+        }
 
         //////////////////////////////////
         System.out.println(rows);

@@ -1,8 +1,9 @@
 package kr.pe.ryudaewan.stiletto.autocomplete.impl;
 
-import java.util.List;
-import java.util.Properties;
-
+import kr.pe.ryudaewan.stiletto.autocomplete.Customer;
+import kr.pe.ryudaewan.stiletto.autocomplete.CustomerController;
+import kr.pe.ryudaewan.stiletto.autocomplete.CustomerService;
+import kr.pe.ryudaewan.stiletto.autocomplete.exception.EmptyInputException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.pe.ryudaewan.stiletto.autocomplete.Customer;
-import kr.pe.ryudaewan.stiletto.autocomplete.CustomerController;
-import kr.pe.ryudaewan.stiletto.autocomplete.CustomerService;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ryudaewan on 2017-05-17.
@@ -30,9 +30,16 @@ public class CustomerControllerImpl implements CustomerController {
     @Override
     public @ResponseBody
     List<Customer> searchCustomers(@RequestParam String keyword) {
+        List<Customer> searchResult = new ArrayList<>();
+        keyword = keyword.trim();
+
         if (logger.isDebugEnabled()) logger.debug(keyword);
 
-        List<Customer> searchResult = customerService.searchCustomers(keyword);
+        if (null != keyword && !"".equals(keyword)) {
+            searchResult = customerService.searchCustomers(keyword);
+        } else {
+            throw new EmptyInputException("AC-00000001", "검색할 고객명을 입력하지 않았습니다.");
+        }
 
         return searchResult;
     }

@@ -1,8 +1,8 @@
 package kr.pe.ryudaewan.stiletto.autocomplete;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by ryudaewan on 2017-05-17.
