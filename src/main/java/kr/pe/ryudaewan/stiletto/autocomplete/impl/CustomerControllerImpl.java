@@ -4,14 +4,12 @@ import kr.pe.ryudaewan.stiletto.autocomplete.Customer;
 import kr.pe.ryudaewan.stiletto.autocomplete.CustomerController;
 import kr.pe.ryudaewan.stiletto.autocomplete.CustomerService;
 import kr.pe.ryudaewan.stiletto.autocomplete.exception.EmptyInputException;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +17,7 @@ import java.util.List;
 /**
  * Created by ryudaewan on 2017-05-17.
  */
-@Controller
+@RestController
 public class CustomerControllerImpl implements CustomerController {
     private static final Log logger = LogFactory.getLog(CustomerControllerImpl.class);
 
@@ -30,17 +28,24 @@ public class CustomerControllerImpl implements CustomerController {
     @Override
     public @ResponseBody
     List<Customer> searchCustomers(@RequestParam String keyword) {
-        List<Customer> searchResult = new ArrayList<>();
-        keyword = keyword.trim();
+        List<Customer> searchResult = null;
 
         if (logger.isDebugEnabled()) logger.debug(keyword);
 
         if (null != keyword && !"".equals(keyword)) {
-            searchResult = customerService.searchCustomers(keyword);
+            searchResult = customerService.searchCustomers(keyword.trim());
         } else {
             throw new EmptyInputException("AC-00000001", "검색할 고객명을 입력하지 않았습니다.");
         }
 
         return searchResult;
+    }
+
+    /**
+     * @see <a href="http://springboot.tistory.com/33">스프링부트 : REST 어플리케이션에서 예외 처리하기</a>
+     * */
+    @ExceptionHandler(value = EmptyInputException.class)
+    public String nfeHandler(EmptyInputException ex){
+        return ex.toString();
     }
 }

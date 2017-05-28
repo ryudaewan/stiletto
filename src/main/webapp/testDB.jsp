@@ -19,7 +19,7 @@
     ResultSet rs = null;
 
     try {
-        ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/oracle" );
+        ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/stiletto" );
         conn = ds.getConnection();
         pstmt = conn.prepareStatement("SELECT 'SUCCESS' FROM DUAL");
         rs = pstmt.executeQuery();

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--<description>http://www.mkyong.com/spring-mvc/spring-mvc-jquery-autocomplete-example/-->
-        <!--http://gnujava.com/board/article_view.jsp?article_no=3286&board_no=11&table_cd=EPAR04&table_no=04-->
+    <!--http://gnujava.com/board/article_view.jsp?article_no=3286&board_no=11&table_cd=EPAR04&table_no=04-->
     <!--</description>-->
 
     <groupId>kr.pe.ryudaewan</groupId>
@@ -19,19 +19,59 @@
         <jackson.version>2.8.8.1</jackson.version>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>mypc-win</id>
+            <properties>
+                <env>mypc-win</env>
+                <was.home>D:\Servers\apache-tomcat-8.5.15</was.home>
+                <jdbc.driver>${was.home}\lib\ojdbc6.jar</jdbc.driver>
+                <was.app.root>${was.home}\webapps</was.app.root>
+                <jdbc.driver.class>oracle.jdbc.OracleDriver</jdbc.driver.class>
+                <db.url>jdbc:oracle:thin:@127.0.0.1:1521:XE</db.url>
+                <db.id>stilettoadm</db.id>
+                <db.password>coreplus01</db.password>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.oracle.jdbc</groupId>
+                    <artifactId>ojdbc6</artifactId>
+                    <version>11.2.0.2.0</version>
+                    <scope>system</scope>
+                    <systemPath>${jdbc.driver}</systemPath>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>mypc-mac</id>
+            <properties>
+                <env>mypc-mac</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>pc-cjl</id>
+            <properties>
+                <env>pc-cjl</env>
+                <was.home>D:\Servers\apache-tomcat-8.5.15</was.home>
+                <jdbc.driver>${was.home}\lib\ojdbc8.jar</jdbc.driver>
+                <was.app.root>${was.home}\webapps</was.app.root>
+                <jdbc.driver.class>oracle.jdbc.OracleDriver</jdbc.driver.class>
+                <db.url>jdbc:oracle:thin:@112.217.239.173:1521:SBORA</db.url>
+                <db.id>devuser</db.id>
+                <db.password>coreplus01</db.password>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.oracle.jdbc</groupId>
+                    <artifactId>ojdbc8</artifactId>
+                    <version>12.2.0.1.0</version>
+                    <scope>system</scope>
+                    <systemPath>${jdbc.driver}</systemPath>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
     <dependencies>
-        <dependency>
-            <groupId>com.oracle.jdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-            <version>12.2.0.1.0</version>
-            <scope>system</scope>
-            <systemPath>${user.home}\Downloads\database\stage\ext\jlib\ojdbc8.jar</systemPath>
-        </dependency>
-        <!--<dependency>-->
-            <!--<groupId>javax.cache</groupId>-->
-            <!--<artifactId>cache-api</artifactId>-->
-            <!--<version>1.0.0</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -48,24 +88,31 @@
             <version>3.5</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.8.2</version>
         </dependency>
-        <!--<dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-web</artifactId>
-            <version>2.8.2</version>
-        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.8.6</version>
+        </dependency>
+
     </dependencies>
 
     <build>
         <finalName>stiletto</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources/${env}</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources/${env}</directory>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -81,7 +128,15 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.1.0</version>
-                <configuration></configuration>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp/META-INF</directory>
+                            <filtering>true</filtering>
+                            <targetPath>META-INF</targetPath>
+                        </resource>
+                    </webResources>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -95,7 +150,7 @@
                         </goals>
                         <configuration>
                             <target>
-                                <copy file="${basedir}/target/stiletto.war" tofile="C:\Servers\apache-tomcat-8.5.15\webapps\stiletto.war"/>
+                                <copy file="${basedir}/target/stiletto.war" tofile="${was.app.root}\stiletto.war"/>
                             </target>
                         </configuration>
                     </execution>

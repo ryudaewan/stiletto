@@ -4,7 +4,7 @@
 *.a
 
 # but do track lib.a, even though you're ignoring .a files above
-!lib.a
+#!lib.a
 
 # only ignore the TODO file in the current directory, not subdir/TODO
 /TODO
@@ -21,7 +21,6 @@ doc/**/*.pdf
 # Compiled source #
 ###################
 *.com
-*.class
 *.dll
 *.exe
 *.o
@@ -36,7 +35,6 @@ doc/**/*.pdf
 *.dmg
 *.gz
 *.iso
-*.jar
 *.rar
 *.tar
 *.zip
@@ -57,3 +55,4 @@ Thumbs.db
 
 ############
 target/
+.idea/

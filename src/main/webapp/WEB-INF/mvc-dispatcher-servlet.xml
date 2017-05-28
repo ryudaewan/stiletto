@@ -18,7 +18,7 @@
         </property>
     </bean>
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/jdbc/oracle"/>
+        <property name="jndiName" value="java:comp/env/jdbc/stiletto"/>
     </bean>
     <ctx:component-scan base-package="kr.pe.ryudaewan.stiletto.autocomplete"/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>

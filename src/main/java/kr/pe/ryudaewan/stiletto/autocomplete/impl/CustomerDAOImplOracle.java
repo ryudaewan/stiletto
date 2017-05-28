@@ -33,17 +33,12 @@ public class CustomerDAOImplOracle implements CustomerDAO {
     public List<Customer> searchCustomers(String keyword) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(this.dataSource);
         List<Customer> searchResult = new ArrayList<>();
-        String sql = "SELECT CT.ID\n" +
-                "  , CT.NAME\n" +
-                "  , CT.NATIONALITY\n" +
-                "  , UTL_MATCH.JARO_WINKLER(?, ct.name) jw\n" +
-//                ",  UTL_MATCH.JARO_WINKLER_SIMILARITY(?, ct.name) jws\n" +
-//                ",  UTL_MATCH.EDIT_DISTANCE(?, ct.name) ed\n" +
-//                ",  UTL_MATCH.EDIT_DISTANCE_SIMILARITY(?, ct.name) eds\n" +
-                "FROM DEVUSER.COMPANY_NAME ct\n" +
-                "WHERE 1 = 1 and\n" +
-                "  CT.NAME LIKE ?\n" +
-                "ORDER BY JW DESC";
+        String sql = "SELECT cn.CUST_ID, cn.CUST_NM, cn.LANG_CD, " +
+                "UTL_MATCH.JARO_WINKLER(?, cn.CUST_NM) jw\n" +
+                "from TB_CUST_NM cn\n" +
+                "where 1=1 AND\n" +
+                "cn.CUST_NM like ?\n" +
+                "ORDER BY jw DESC";
         String temp = keyword.toUpperCase();
 
         Object[] params = {temp, temp + "%"};
@@ -59,12 +54,6 @@ public class CustomerDAOImplOracle implements CustomerDAO {
 
         //////////////////////////////////
         System.out.println("\n" + logger);
-        System.out.println(sql);
-        System.out.println(this.dataSource);
-        System.out.println(jdbcTemplate);
-        System.out.println(keyword.length());
-        for (int inx = 0; inx < params.length; inx++)
-            System.out.println(params[inx]);
         //////////////////////////////////
 
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, params);
@@ -73,19 +62,19 @@ public class CustomerDAOImplOracle implements CustomerDAO {
             rows = rows.subList(0, 1);
         }
 
-        //////////////////////////////////
-        System.out.println(rows);
-        /////////////////////////////////
-
         for (Map<String, Object> row : rows) {
             Customer customer = new Customer();
-            customer.setId(Integer.parseInt(((BigDecimal) row.get("ID")).toString()));
-            customer.setCustNm((String) row.get("NAME"));
-            customer.setNationality((String) row.get("NATIONALITY"));
+            customer.setId(Integer.parseInt((String) row.get("CUST_ID")));
+            customer.setCustNm((String) row.get("CUST_NM"));
+            customer.setLangCd((String) row.get("LANG_CD"));
             customer.setJwVal((Double) row.get("JW"));
             customer.setKeyword(keyword);
             searchResult.add(customer);
         }
+
+        //////////////////////////////////
+        //System.out.println(searchResult);
+        /////////////////////////////////
 
         return searchResult;
     }

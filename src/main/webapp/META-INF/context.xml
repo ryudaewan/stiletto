@@ -27,9 +27,9 @@
 
     <!-- url: The JDBC connection url for connecting to your Oracle database. -->
 
-    <Resource name="jdbc/oracle" auth="Container"
-              type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
-              url="jdbc:oracle:thin:@112.217.239.173:1521:SBORA"
-              username="devuser" password="coreplus01" maxTotal="3" maxIdle="3"
+    <Resource name="jdbc/stiletto" auth="Container"
+              type="javax.sql.DataSource" driverClassName="${jdbc.driver.class}"
+              url="${db.url}"
+              username="${db.id}" password="${db.password}" maxTotal="3" maxIdle="3"
               maxWaitMillis="-1"/>
 </Context>

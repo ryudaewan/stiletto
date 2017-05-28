@@ -9,8 +9,4 @@ public class EmptyInputException extends BusinessException {
     public EmptyInputException(String errCd, String msg) {
         super(errCd, msg);
     }
-
-    public EmptyInputException(String errCd, String msg, Throwable throwable) {
-        super(errCd, msg, throwable);
-    }
 }

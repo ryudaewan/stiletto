@@ -6,7 +6,7 @@ package kr.pe.ryudaewan.stiletto.autocomplete;
 public class Customer {
     private String custNm;
     private int id;
-    private String nationality;
+    private String langCd;
     private double jwVal;
     private String keyword;
 
@@ -42,11 +42,11 @@ public class Customer {
         this.id = id;
     }
 
-    public String getNationality() {
-        return nationality;
+    public String getLangCd() {
+        return langCd;
     }
 
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public void setLangCd(String langCd) {
+        this.langCd = langCd;
     }
 }
