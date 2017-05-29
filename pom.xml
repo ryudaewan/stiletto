@@ -26,6 +26,7 @@
                 <env>mypc-win</env>
                 <was.home>D:\Servers\apache-tomcat-8.5.15</was.home>
                 <jdbc.driver>${was.home}\lib\ojdbc6.jar</jdbc.driver>
+                <jdbc.driver.version>11.2.0.2.0</jdbc.driver.version>
                 <was.app.root>${was.home}\webapps</was.app.root>
                 <jdbc.driver.class>oracle.jdbc.OracleDriver</jdbc.driver.class>
                 <db.url>jdbc:oracle:thin:@127.0.0.1:1521:XE</db.url>
@@ -36,7 +37,7 @@
                 <dependency>
                     <groupId>com.oracle.jdbc</groupId>
                     <artifactId>ojdbc6</artifactId>
-                    <version>11.2.0.2.0</version>
+                    <version>${jdbc.driver.version}</version>
                     <scope>system</scope>
                     <systemPath>${jdbc.driver}</systemPath>
                 </dependency>
@@ -52,8 +53,9 @@
             <id>pc-cjl</id>
             <properties>
                 <env>pc-cjl</env>
-                <was.home>D:\Servers\apache-tomcat-8.5.15</was.home>
+                <was.home>C:\Servers\apache-tomcat-8.5.15</was.home>
                 <jdbc.driver>${was.home}\lib\ojdbc8.jar</jdbc.driver>
+                <jdbc.driver.version>12.2.0.1.0</jdbc.driver.version>
                 <was.app.root>${was.home}\webapps</was.app.root>
                 <jdbc.driver.class>oracle.jdbc.OracleDriver</jdbc.driver.class>
                 <db.url>jdbc:oracle:thin:@112.217.239.173:1521:SBORA</db.url>
@@ -64,7 +66,7 @@
                 <dependency>
                     <groupId>com.oracle.jdbc</groupId>
                     <artifactId>ojdbc8</artifactId>
-                    <version>12.2.0.1.0</version>
+                    <version>${jdbc.driver.version}</version>
                     <scope>system</scope>
                     <systemPath>${jdbc.driver}</systemPath>
                 </dependency>
@@ -92,7 +94,6 @@
             <artifactId>log4j-core</artifactId>
             <version>2.8.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
