@@ -20,12 +20,12 @@
     <bean id="dataSourceOracle" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:comp/env/jdbc/stiletto"/>
     </bean>
-    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSourceOracle"/>
         <property name="mapperLocations" value="/WEB-INF/mapper/**/*_SQL.xml"/>
     </bean>
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-        <constructor-arg index="0" ref="sqlSession"/>
+        <constructor-arg ref="sqlSessionFactory"/>
     </bean>
     <ctx:component-scan base-package="kr.pe.ryudaewan.stiletto.autocomplete"/>
     <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->

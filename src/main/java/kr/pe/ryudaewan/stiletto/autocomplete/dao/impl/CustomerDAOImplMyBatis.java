@@ -15,21 +15,20 @@ import java.util.List;
 @Repository
 public class CustomerDAOImplMyBatis implements CustomerDAO {
     @Autowired
-    private SqlSessionTemplate sqlSession;
+    private SqlSessionTemplate sqlSessionTemplate;
 
     @Override @SuppressWarnings("unchecked")
     public List<Customer> searchCustomers(String keyword) {
         HashMap<String, String> params = new HashMap<>();
         String temp = keyword.toUpperCase();
-        params.put("originalKeyword", keyword);
-        params.put("keyword", keyword);
+        params.put("keyword", temp);
 
         if (2 < temp.length()) {
-            params.put("keyword.substring", keyword.substring(0, 2) + "%");
+            params.put("keyword.substring", temp.substring(0, 2) + "%");
         } else {
-            params.put("keyword.substring", keyword + "%");
+            params.put("keyword.substring", temp + "%");
         }
 
-        return this.sqlSession.selectList("selectCustNms", params);
+        return this.sqlSessionTemplate.selectList("selectCustNms", params);
     }
 }
