@@ -41,6 +41,13 @@
                     <scope>system</scope>
                     <systemPath>${jdbc.driver}</systemPath>
                 </dependency>
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                    <version>3.1.0</version>
+                    <scope>system</scope>
+                    <systemPath>${was.home}\lib\servlet-api.jar</systemPath>
+                </dependency>
             </dependencies>
         </profile>
         <profile>
@@ -69,6 +76,13 @@
                     <version>${jdbc.driver.version}</version>
                     <scope>system</scope>
                     <systemPath>${jdbc.driver}</systemPath>
+                </dependency>
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                    <version>3.1.0</version>
+                    <scope>system</scope>
+                    <systemPath>${was.home}\lib\servlet-api.jar</systemPath>
                 </dependency>
             </dependencies>
         </profile>
