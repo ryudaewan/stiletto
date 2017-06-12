@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.pe.ryudaewan.stiletto.autocomplete.dao.impl.CustomerDAOImplMyBatis">
+    <resultMap id="custNm" type="kr.pe.ryudaewan.stiletto.autocomplete.entity.Customer">
+        <result property="id" column="CUST_ID"/>
+        <result property="custNm" column="CUST_NM"/>
+        <result property="langCd" column="LANG_CD"/>
+        <result property="JwVal" column="JW"/>
+        <result property="keyword" column="KEYWORD"/>
+    </resultMap>
+
+    <select id="selectCustNms" parameterType="hashmap" resultType="custNm"><![CDATA[
+        SELECT cn.CUST_ID,
+            cn.CUST_NM,
+            cn.LANG_CD,
+            UTL_MATCH.JARO_WINKLER(#{keyword}, cn.CUST_NM) jw,
+            #{originalKeyword} KEYWORD
+        from TB_CUST_NM cn
+        where 1=1 AND
+            cn.CUST_NM like #{keyword.substring}
+            ORDER BY jw DESC]]>
+    </select>
+</mapper>
