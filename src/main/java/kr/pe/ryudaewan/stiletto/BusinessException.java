@@ -33,7 +33,7 @@ public class BusinessException extends RuntimeException {
 
     @Override
     public String toString() {
-        return "{errCd: \"" + errCd + "\", message: \"" + this.getLocalizedMessage() +"\"}";
+        return "{errCd: \"" + errCd + "\", message: \"" + this.getLocalizedMessage() + "\"}";
     }
 
     @Override

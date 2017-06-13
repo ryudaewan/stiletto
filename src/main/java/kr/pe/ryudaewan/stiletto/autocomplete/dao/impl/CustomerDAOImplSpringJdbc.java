@@ -1,12 +1,11 @@
 package kr.pe.ryudaewan.stiletto.autocomplete.dao.impl;
 
-import kr.pe.ryudaewan.stiletto.autocomplete.entity.Customer;
 import kr.pe.ryudaewan.stiletto.autocomplete.dao.CustomerDAO;
+import kr.pe.ryudaewan.stiletto.autocomplete.entity.Customer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;

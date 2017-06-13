@@ -1,9 +1,9 @@
 package kr.pe.ryudaewan.stiletto.autocomplete.control.impl;
 
-import kr.pe.ryudaewan.stiletto.autocomplete.entity.Customer;
-import kr.pe.ryudaewan.stiletto.autocomplete.control.CustomerController;
-import kr.pe.ryudaewan.stiletto.autocomplete.service.CustomerService;
 import kr.pe.ryudaewan.stiletto.autocomplete.EmptyInputException;
+import kr.pe.ryudaewan.stiletto.autocomplete.control.CustomerController;
+import kr.pe.ryudaewan.stiletto.autocomplete.entity.Customer;
+import kr.pe.ryudaewan.stiletto.autocomplete.service.CustomerService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +40,9 @@ public class CustomerControllerImpl implements CustomerController {
 
     /**
      * @see <a href="http://springboot.tistory.com/33">스프링부트 : REST 어플리케이션에서 예외 처리하기</a>
-     * */
+     */
     @ExceptionHandler(value = EmptyInputException.class)
-    public String nfeHandler(EmptyInputException ex){
+    public String nfeHandler(EmptyInputException ex) {
         return ex.toString();
     }
 }

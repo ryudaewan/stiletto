@@ -24,7 +24,7 @@
         <property name="dataSource" ref="dataSourceOracle"/>
         <property name="mapperLocations" value="/WEB-INF/mapper/**/*_SQL.xml"/>
     </bean>
-    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg ref="sqlSessionFactory"/>
     </bean>
     <ctx:component-scan base-package="kr.pe.ryudaewan.stiletto.autocomplete"/>
