@@ -3,14 +3,14 @@
 <mapper namespace="kr.pe.ryudaewan.stiletto.autocomplete.dao.impl.CustomerDAOImplMyBatis">
     <select id="selectCustNms" parameterType="hashmap"
             resultType="kr.pe.ryudaewan.stiletto.autocomplete.entity.Customer"><![CDATA[
-        SELECT cn.CUST_ID as Id,
-            cn.CUST_NM as custNm,
-            cn.LANG_CD as langCd,
-            UTL_MATCH.JARO_WINKLER(#{keyword}, cn.CUST_NM) as jwVal,
+        SELECT cn.cust_cd as Id,
+            cn.comp_nm_k as custNm,
+            'ko' as langCd,
+            UTL_MATCH.JARO_WINKLER(#{keyword}, cn.comp_nm_k) as jwVal,
             #{keyword} keyword
-        from TB_CUST_NM cn
+        from km_customer cn
         where 1=1 AND
-            cn.CUST_NM like #{twoLetters}
-            ORDER BY jw DESC]]>
+            cn.comp_nm_k like #{twoLetters}
+        ORDER BY jwVal DESC]]>
     </select>
 </mapper>
