@@ -9,6 +9,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public class CustomerControllerImpl implements CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @RequestMapping(value = "/ac/searchCustomers", method = RequestMethod.GET)
+    @RequestMapping(value = "/ac/searchCustomers", method = RequestMethod.GET, produces = "application/json")
     @Override
     public @ResponseBody
     List<Customer> searchCustomers(@RequestParam String keyword) {
@@ -42,7 +44,8 @@ public class CustomerControllerImpl implements CustomerController {
      * @see <a href="http://springboot.tistory.com/33">스프링부트 : REST 어플리케이션에서 예외 처리하기</a>
      */
     @ExceptionHandler(value = EmptyInputException.class)
-    public String nfeHandler(EmptyInputException ex) {
+    public String nfeHandler(EmptyInputException ex, HttpServletResponse response) {
+        response.setHeader("Content-Type", "application/json;charset=UTF-8");
         return ex.toString();
     }
 }

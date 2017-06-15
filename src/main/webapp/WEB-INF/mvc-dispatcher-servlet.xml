@@ -28,6 +28,6 @@
         <constructor-arg ref="sqlSessionFactory"/>
     </bean>
     <ctx:component-scan base-package="kr.pe.ryudaewan.stiletto.autocomplete"/>
-    <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
+    <mvc:resources mapping="/dv/**" location="/dv/"/>
     <mvc:annotation-driven/>
 </beans>

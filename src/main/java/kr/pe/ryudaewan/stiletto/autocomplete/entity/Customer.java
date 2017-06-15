@@ -5,7 +5,7 @@ package kr.pe.ryudaewan.stiletto.autocomplete.entity;
  */
 public class Customer {
     private String custNm;
-    private int id;
+    private String id;
     private String langCd;
     private double jwVal;
     private String keyword;
@@ -34,11 +34,11 @@ public class Customer {
         this.custNm = custNm;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

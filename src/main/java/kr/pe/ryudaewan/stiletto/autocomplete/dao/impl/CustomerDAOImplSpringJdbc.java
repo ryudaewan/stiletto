@@ -62,7 +62,7 @@ public class CustomerDAOImplSpringJdbc implements CustomerDAO {
 
         for (Map<String, Object> row : rows) {
             Customer customer = new Customer();
-            customer.setId(Integer.parseInt((String) row.get("CUST_ID")));
+            customer.setId((String) row.get("CUST_ID"));
             customer.setCustNm((String) row.get("CUST_NM"));
             customer.setLangCd((String) row.get("LANG_CD"));
             customer.setJwVal((Double) row.get("JW"));
