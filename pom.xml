@@ -66,7 +66,7 @@
                 <was.app.root>${was.home}\webapps</was.app.root>
                 <jdbc.driver.class>oracle.jdbc.OracleDriver</jdbc.driver.class>
                 <db.url>jdbc:oracle:thin:@112.217.239.173:1521:SBORA</db.url>
-                <db.id>devuser</db.id>
+                <db.id>cjl_kms</db.id>
                 <db.password>coreplus01</db.password>
             </properties>
             <dependencies>
@@ -99,6 +99,12 @@
             <version>${spring.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.5</version>
@@ -128,6 +134,19 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.8.9</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
