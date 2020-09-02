@@ -1,0 +1,20 @@
+# https://github.com/docker/for-win/issues/445
+# docker volume create --name postgres-data-volume -d local
+version: '3.7'
+services:
+  db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_DB=stiletto
+      - POSTGRES_USER=stiletto
+      - POSTGRES_PASSWORD=stiletto@1
+      - POSTGRES_INITDB_ARGS=--encoding UTF8 --locale ko_KR.utf8
+      - LANG=ko_KR.utf8
+    ports:
+      - 65432:5432
+    volumes:
+      #      - /d//var/lib/postgresql/data:/var/lib/postgresql/data
+      - postgres-data-volume:/var/lib/postgresql/data
+volumes:
+  postgres-data-volume:
+    external: true
