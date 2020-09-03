@@ -1,5 +1,6 @@
 package kr.pe.ryudaewan.stiletto.member.controller;
 
+import kr.pe.ryudaewan.stiletto.member.NoMembersFoundException;
 import kr.pe.ryudaewan.stiletto.member.entity.Member;
 import kr.pe.ryudaewan.stiletto.member.service.MemberService;
 import org.springframework.data.domain.Pageable;
@@ -58,5 +59,11 @@ public class MemberController {
     public List<Member> searchMembers(@PageableDefault Pageable pageable, @PathVariable String screenName) {
 
         return this.memberService.searchMembers(screenName, pageable);
+    }
+
+    @ExceptionHandler(NoMembersFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Member noMembersFound(NoMembersFoundException nmfe) {
+        return null;
     }
 }

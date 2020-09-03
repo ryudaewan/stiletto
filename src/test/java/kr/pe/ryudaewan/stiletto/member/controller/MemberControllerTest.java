@@ -1,4 +1,4 @@
-package kr.pe.ryudaewan.stiletto.member;
+package kr.pe.ryudaewan.stiletto.member.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.pe.ryudaewan.stiletto.member.entity.Member;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class MemberControllerTest {
     private final String APPLICATION_JSON_UTF8 = "application/json;charset=UTF-8";
-    private final Member member = new Member("alfredo", "alfredo@wayne.com", "eu59tgdk!f&");
+    private final Member member = new Member("오또맘", "ohttomom@tekken7.com", "eu59tgdk!f&");
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private MockMvc mockMvc;
@@ -76,7 +76,7 @@ public class MemberControllerTest {
     @Test
     public void testSearchMembers() throws Exception {
         int pageSize = 5;
-        String reqUrl = "/member/search/장거?page=0&size=" + pageSize + "&sort=id,ASC";
+        String reqUrl = "/member/search/오?page=0&size=" + pageSize + "&sort=id,ASC";
 
         ResultActions resp = this.mockMvc.perform(get(reqUrl)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -107,6 +107,17 @@ public class MemberControllerTest {
                 .andExpect(jsonPath("screenName").value(member.getScreenName()))
                 .andExpect(jsonPath("email").value(member.getEmail()))
                 .andExpect(jsonPath("password").value(member.getPassword()))
+        ;
+    }
+
+    @Test
+    public void testFindNoMembers() throws Exception {
+        this.mockMvc.perform(get("/member/find/234834739843")
+                .contentType(MediaType.APPLICATION_JSON)
+                //.accept(MediaTypes.HAL_JSON)
+                .accept(this.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isNotFound())
         ;
     }
 }

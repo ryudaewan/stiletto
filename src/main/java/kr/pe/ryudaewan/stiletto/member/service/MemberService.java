@@ -1,7 +1,9 @@
 package kr.pe.ryudaewan.stiletto.member.service;
 
+import kr.pe.ryudaewan.stiletto.member.NoMembersFoundException;
 import kr.pe.ryudaewan.stiletto.member.entity.Member;
 import kr.pe.ryudaewan.stiletto.member.repository.MemberRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,15 +36,17 @@ public class MemberService {
     }
 
     public Member findMember(Long id) {
-        //return this.MemberRepository.findById(id).;
         return this.memberRepository.findById(id)
-                //.orElse(null)
-                .orElseThrow();
+                .orElseThrow(NoMembersFoundException::new);
     }
 
     public List<Member> getAllMembers(Pageable pageable) {
         List<Member> memberList = new ArrayList<>();
-        this.memberRepository.findAll(pageable).forEach(memberList::add);
+        Page<Member> members = this.memberRepository.findAll(pageable);
+
+        if (members.isEmpty()) throw new NoMembersFoundException();
+
+        members.forEach(memberList::add);
 
         return memberList;
     }
@@ -61,6 +65,10 @@ public class MemberService {
         }
 
         members = this.memberRepository.findByScreenNameContains(screenName, pageable);
+
+        if (null == members || members.size() < 1) {
+            throw new NoMembersFoundException();
+        }
 
         return members;
     }
