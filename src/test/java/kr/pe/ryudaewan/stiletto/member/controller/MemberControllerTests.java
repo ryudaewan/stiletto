@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.pe.ryudaewan.stiletto.member.entity.Member;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -22,11 +20,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(SpringExtension.class)
+//@SpringBootTest(classes = {Member.class, MemberRepository.class, MemberService.class, MemberController.class})
 @SpringBootTest // 모든 bean을 테스트에 등록한다.
-// @WebMvcTest
+// @RestClientTest
+// @JsonTest
 @AutoConfigureMockMvc
-public class MemberControllerTest {
+public class MemberControllerTests {
     private final String APPLICATION_JSON_UTF8 = "application/json;charset=UTF-8";
     private final Member member = new Member("오또맘", "ohttomom@tekken7.com", "eu59tgdk!f&");
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

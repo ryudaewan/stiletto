@@ -1,5 +1,6 @@
 package kr.pe.ryudaewan.stiletto.member.controller;
 
+import kr.pe.ryudaewan.stiletto.member.DuplicateMemberException;
 import kr.pe.ryudaewan.stiletto.member.NoMembersFoundException;
 import kr.pe.ryudaewan.stiletto.member.entity.Member;
 import kr.pe.ryudaewan.stiletto.member.service.MemberService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -63,7 +65,13 @@ public class MemberController {
 
     @ExceptionHandler(NoMembersFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Member noMembersFound(NoMembersFoundException nmfe) {
-        return null;
+    public List<Member> noMembersFound(NoMembersFoundException nmfe) {
+        return new ArrayList<Member>();
+    }
+
+    @ExceptionHandler(DuplicateMemberException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String duplicatedMember(DuplicateMemberException nmfe) {
+        return nmfe.getDuplicatedEmail();
     }
 }

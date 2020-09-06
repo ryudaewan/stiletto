@@ -1,6 +1,28 @@
+server:
+  compression:
+    enabled: true
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+logging:
+  level:
+    root: info
+    kr.pe.ryudaewan.stiletto: debug
 spring:
+  devtools:
+    restart:
+      enabled: true
   h2:
     console:
       enabled: true
   datasource:
     url: jdbc:h2:mem:stiletto
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  thymeleaf:
+    cache: false

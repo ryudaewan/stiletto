@@ -1,14 +1,15 @@
 package kr.pe.ryudaewan.stiletto.member.service;
 
+import kr.pe.ryudaewan.stiletto.member.DuplicateMemberException;
 import kr.pe.ryudaewan.stiletto.member.NoMembersFoundException;
 import kr.pe.ryudaewan.stiletto.member.entity.Member;
 import kr.pe.ryudaewan.stiletto.member.repository.MemberRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,8 +22,15 @@ public class MemberService {
 
     @Transactional
     public Member createMember(Member memberInfo) {
+        Member newMember = null;
 
-        return this.memberRepository.save(memberInfo);
+        try {
+            newMember = this.memberRepository.save(memberInfo);
+        } catch (DataIntegrityViolationException dive) {
+            throw new DuplicateMemberException(dive, memberInfo.getEmail());
+        }
+
+        return newMember;
     }
 
     @Transactional
@@ -41,35 +49,32 @@ public class MemberService {
     }
 
     public List<Member> getAllMembers(Pageable pageable) {
-        List<Member> memberList = new ArrayList<>();
+
         Page<Member> members = this.memberRepository.findAll(pageable);
 
         if (members.isEmpty()) throw new NoMembersFoundException();
 
-        members.forEach(memberList::add);
-
-        return memberList;
+        return members.getContent();
     }
 
     public List<Member> searchMembers(String screenName, Pageable pageable) {
-        List<Member> members = this.memberRepository.findByScreenName(screenName, pageable);
+        Page<Member> selectedMembers = this.memberRepository.findByScreenName(screenName, pageable);
 
-        if (null != members && members.size() > 0) {
-            return members;
-        }
+        if (selectedMembers.isEmpty() == false) return selectedMembers.getContent();
 
-        members = this.memberRepository.findByScreenNameStartsWith(screenName, pageable);
+        selectedMembers = this.memberRepository.findByScreenNameStartsWith(screenName, pageable);
 
-        if (null != members && members.size() > 0) {
-            return members;
-        }
+        if (selectedMembers.isEmpty() == false) return selectedMembers.getContent();
 
-        members = this.memberRepository.findByScreenNameContains(screenName, pageable);
+        selectedMembers = this.memberRepository.findByScreenNameContains(screenName, pageable);
 
-        if (null == members || members.size() < 1) {
-            throw new NoMembersFoundException();
-        }
+        if (selectedMembers.isEmpty() == true) throw new NoMembersFoundException();
 
-        return members;
+        return selectedMembers.getContent();
+    }
+
+    public Member signIn(String email, String password) {
+        return this.memberRepository.findByEmailAndPassword(email, password)
+                .orElseThrow(NoMembersFoundException::new);
     }
 }

@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 public abstract class StilettoEntity {
 
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    private final Timestamp createdAt;
 
     public StilettoEntity() {
         this.createdAt = new Timestamp(System.currentTimeMillis());

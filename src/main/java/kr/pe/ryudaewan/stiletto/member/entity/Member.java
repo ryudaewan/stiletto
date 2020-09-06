@@ -5,18 +5,21 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "UK_MEMBER_EMAIL", columnNames = {"email"})
+    })
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50)
+    @Column(name = "screen_name", length = 50)
     private String screenName;
 
-    @Column(length = 1024)
+    @Column(length = 1024, unique = true, nullable = false)
     private String email;
 
-    @Column(length = 1024)
+    @Column(length = 1024, nullable = false)
     private String password;
 
     public Member() {
@@ -29,11 +32,11 @@ public class Member {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Member member = (Member) o;
-        return Objects.equals(id, member.id);
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Member)) return false;
+        Member member = (Member) obj;
+        return getEmail().equals(member.getEmail());
     }
 
     @Override
