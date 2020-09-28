@@ -74,6 +74,7 @@
 
 <body class="text-center">
 <form action="/signIn" class="form-signin" method="POST" th:action="@{/signIn}">
+    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
     <img alt="" class="mb-4" height="72" src="/sign-in/stiletto.svg" th:src="@{/sign-in/stiletto.svg}" width="72">
     <h1 class="h3 mb-3 font-weight-normal">로그인</h1>
     <label class="sr-only" for="inputEmail">이메일</label>

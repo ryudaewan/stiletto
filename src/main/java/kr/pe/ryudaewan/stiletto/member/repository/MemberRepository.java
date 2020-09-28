@@ -17,4 +17,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Page<Member> findByScreenNameContains(String screenName, Pageable pageable);
 
     Optional<Member> findByEmailAndPassword(String email, String password);
+
+    Optional<Member> findByEmail(String email);
 }

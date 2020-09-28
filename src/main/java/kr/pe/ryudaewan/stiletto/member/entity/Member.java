@@ -7,7 +7,7 @@ import java.util.StringJoiner;
 @Entity
 @Table(uniqueConstraints = {
         @UniqueConstraint(name = "UK_MEMBER_EMAIL", columnNames = {"email"})
-    })
+})
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

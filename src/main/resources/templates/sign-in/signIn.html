@@ -74,12 +74,13 @@
 
 <body class="text-center">
 <form action="/signIn" class="form-signin" method="POST" th:action="@{/signIn}">
+    <!-- <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/> -->
     <img alt="" class="mb-4" height="72" src="/sign-in/stiletto.svg" th:src="@{/sign-in/stiletto.svg}" width="72">
     <h1 class="h3 mb-3 font-weight-normal">로그인</h1>
     <label class="sr-only" for="inputEmail">이메일</label>
-    <input autofocus class="form-control" name="email" placeholder="이메일" required type="email">
+    <input autofocus class="form-control" id="inputEmail" name="email" placeholder="이메일" required type="email">
     <label class="sr-only" for="inputPassword">비밀번호</label>
-    <input class="form-control" name="password" placeholder="비밀번호" required type="password">
+    <input class="form-control" id="inputPassword" name="password" placeholder="비밀번호" required type="password">
     <div class="checkbox mb-3">
         <label>
             <input name="storeEmailYn" type="checkbox" value="store-email"> 이메일 저장

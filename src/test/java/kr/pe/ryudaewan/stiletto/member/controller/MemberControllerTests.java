@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -31,10 +32,11 @@ public class MemberControllerTests {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
+//    @Autowired
+//    private ObjectMapper objectMapper;
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testFindMember() throws Exception {
 
         this.mockMvc.perform(get("/member/find/2")
@@ -49,6 +51,7 @@ public class MemberControllerTests {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testGetAllMembers() throws Exception {
         int pageSize = 5;
         String reqUrl = "/member/list?page=0&size=" + pageSize + "&sort=id,ASC";
@@ -62,7 +65,8 @@ public class MemberControllerTests {
                 .andExpect(content().contentType(this.APPLICATION_JSON_UTF8));
 
         String json = resp.andReturn().getResponse().getContentAsString();
-        Member[] members = this.objectMapper.readValue(json, Member[].class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        Member[] members = objectMapper.readValue(json, Member[].class);
 
         assertEquals(pageSize, members.length);
 
@@ -73,6 +77,7 @@ public class MemberControllerTests {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testSearchMembers() throws Exception {
         int pageSize = 5;
         String reqUrl = "/member/search/오?page=0&size=" + pageSize + "&sort=id,ASC";
@@ -86,12 +91,15 @@ public class MemberControllerTests {
                 .andExpect(content().contentType(this.APPLICATION_JSON_UTF8));
 
         String json = resp.andReturn().getResponse().getContentAsString();
-        Member[] members = this.objectMapper.readValue(json, Member[].class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        Member[] members = objectMapper.readValue(json, Member[].class);
         Assertions.assertNotNull(members);
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testCreateMember() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
 
         this.mockMvc.perform(post("/member/create")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -110,6 +118,7 @@ public class MemberControllerTests {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testFindNoMembers() throws Exception {
         this.mockMvc.perform(get("/member/find/234834739843")
                 .contentType(MediaType.APPLICATION_JSON)
